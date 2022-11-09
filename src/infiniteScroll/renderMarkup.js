@@ -1,6 +1,6 @@
 import { gallery } from "./infiniteScroll";
 
-let markup;
+let markup = "";
 function renderMarkup(array) {
     markup = array.map(item => {
     return `<a class="gallery__item" href=${item.largeImageURL} ><div class="photo-card">
