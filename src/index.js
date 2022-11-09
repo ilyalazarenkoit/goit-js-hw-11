@@ -44,12 +44,10 @@ function resetPage() {
   page = 1
   gallery.innerHTML = ""
 }
-async function addPage (page) {
-  const newPage = await page + 1
-  return newPage
-}
+
 async function onLoadMore () {
-  const preparingForAdditionalFetch = await fetchData(request, addPage)
+
+  const preparingForAdditionalFetch = await fetchData(request, page)
   console.log(preparingForAdditionalFetch)
   const additionalFetch = await preparingForAdditionalFetch.data.hits
   if(additionalFetch.length < 40) {
@@ -58,6 +56,7 @@ async function onLoadMore () {
   }
   console.log(additionalFetch)
   renderMarkup(additionalFetch)
+  page += 1 
 }
 
 export {gallery, page}
