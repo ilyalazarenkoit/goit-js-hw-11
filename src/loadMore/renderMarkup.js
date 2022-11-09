@@ -1,4 +1,4 @@
-import { gallery } from ".";
+import { gallery } from "./loadMore";
 
 
 function renderMarkup(array) {

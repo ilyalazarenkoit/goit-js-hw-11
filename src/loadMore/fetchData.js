@@ -1,6 +1,6 @@
 import axios from "axios";
 import Notiflix from 'notiflix';
-import { pages } from ".";
+import { pages } from "./loadMore";
 
 const BASE_URL = "https://pixabay.com/api/"
 const USER_KEY = "31138413-9963ca1c42c5ab8454e713dbb"

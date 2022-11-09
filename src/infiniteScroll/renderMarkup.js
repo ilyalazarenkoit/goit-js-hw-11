@@ -1,4 +1,4 @@
-import { gallery } from ".";
+import { gallery } from "./infiniteScroll";
 
 
 function renderMarkup(array) {

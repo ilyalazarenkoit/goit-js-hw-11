@@ -4,8 +4,8 @@ import Notiflix from "notiflix"
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css"
 
-const form = document.querySelector(".search-form")
 const gallery = document.querySelector(".gallery")
+const form = document.querySelector(".search-form")
 
 let pages = 1;
 let request;
