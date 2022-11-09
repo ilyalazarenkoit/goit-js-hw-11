@@ -1,9 +1,10 @@
 import { gallery } from ".";
 
+
 function renderMarkup(array) {
     markup = array.map(item => {
-    return `<div class="photo-card">
-    <img class="image"src=${item.webformatURL} alt=${item.tags} loading="lazy" />
+    return `<a class="gallery__item" href=${item.largeImageURL} ><div class="photo-card">
+    <img class="image"src=${item.webformatURL} alt="${item.tags}" loading="lazy" />
     <div class="info">
       <p class="info-item">
         <b>Likes</b>
@@ -22,10 +23,10 @@ function renderMarkup(array) {
         ${item.downloads}
       </p>
     </div>
-    </div>`
+    </div>
+    </a>`
      }).join('')
      gallery.innerHTML += markup;
     }
-
     
 export {renderMarkup}

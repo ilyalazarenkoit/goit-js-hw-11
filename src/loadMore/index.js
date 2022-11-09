@@ -1,53 +1,58 @@
 import { fetchData, page, searchParams } from "./fetchData"
 import { renderMarkup } from "./renderMarkup"
 import Notiflix from "notiflix"
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css"
 
-let page = 1;
-// const button = document.querySelector(".button")
-// const input = document.querySelector(".input")
 const form = document.querySelector(".search-form")
 const buttonLoadMore = document.querySelector(".button_load-more")
 const gallery = document.querySelector(".gallery")
 
+let pages = 1;
 let request;
-let markup;
-let toRender;
 
 form.addEventListener("submit", onSubmit)
-form.addEventListener("input", onInput)
 buttonLoadMore.addEventListener("click", onLoadMore)
 
-function onInput(event) {
-    request = event.target.value;
-    return request;
-}
 
 async function onSubmit (event) {
- 
-  event.preventDefault();
-  resetPage()
-   const response = await fetchData(request, page)
+  request = event.currentTarget.searchQuery.value
+   event.preventDefault();
+   resetPage()
+   const response = await fetchData(request, pages)
    console.log(response);
    let fetching = await response.data.hits
    console.log(fetching)
     if(fetching.length === 0) {
       Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again."); 
     }
-    toRender = await fetching
-    renderMarkup(toRender)
+    renderMarkup(fetching)
     buttonLoadMore.classList.remove("is-hidden")
     if(fetching.length < 40) {
       buttonLoadMore.classList.add("is-hidden")
     }
+    if(fetching.length > 1) {
+    Notiflix.Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
+  }
+  var lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+    })
 }
+
+
 function resetPage() {
-  page = 1
+  pages = 1
   gallery.innerHTML = ""
 }
 
-async function onLoadMore () {
+function newPage(pages) {
+  return ++pages
+}
 
-  const preparingForAdditionalFetch = await fetchData(request, page)
+async function onLoadMore () {
+  let newPages = newPage(pages)
+  const preparingForAdditionalFetch = await fetchData(request, newPages)
   console.log(preparingForAdditionalFetch)
   const additionalFetch = await preparingForAdditionalFetch.data.hits
   if(additionalFetch.length < 40) {
@@ -56,7 +61,13 @@ async function onLoadMore () {
   }
   console.log(additionalFetch)
   renderMarkup(additionalFetch)
-  page += 1 
+  pages++ 
+  var lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+    })
 }
 
-export {gallery, page}
+
+export {gallery}
+
